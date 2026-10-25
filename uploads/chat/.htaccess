@@ -1,0 +1,7 @@
+# Serve audio/video files with correct MIME types so browsers can play them
+AddType audio/webm .webm
+AddType video/webm .webm
+AddType audio/ogg .ogg
+AddType audio/mpeg .mp3
+AddType audio/mp4 .m4a
+AddType image/webp .webp

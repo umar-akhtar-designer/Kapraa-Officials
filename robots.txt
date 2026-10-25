@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# Block admin & system areas (SEO safety)
+Disallow: /admin/
+Disallow: /cart/
+Disallow: /checkout/
+Disallow: /login/
+Disallow: /register/
+Disallow: /config/
+Disallow: /includes/
+Disallow: /*?*
+
+# Allow important assets for proper rendering
+Allow: /assets/
+Allow: /images/
+Allow: /css/
+Allow: /js/
+
+# Sitemap
+Sitemap: https://kapraa.pk/sitemap.xml

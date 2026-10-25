@@ -1,0 +1,26 @@
+# ── Sensitive config (NEVER commit real credentials) ────────
+payment/config.php
+admin/include/secrets.php
+
+# ── Mac system files ─────────────────────────────────────────
+.DS_Store
+**/.DS_Store
+Thumbs.db
+
+# ── Claude AI session files ──────────────────────────────────
+.claude/
+
+# ── Test/debug files ─────────────────────────────────────────
+test.php
+image_test.php
+payment/migrate.php
+
+# ── XAMPP / server logs ──────────────────────────────────────
+*.log
+error_log
+
+# ── IDE files ────────────────────────────────────────────────
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace

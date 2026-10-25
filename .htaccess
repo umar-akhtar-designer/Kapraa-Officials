@@ -1,0 +1,115 @@
+# ── KEEP-ALIVE (reuse TCP connections — reduces latency) ─────────────────────
+<IfModule mod_headers.c>
+    Header set Connection keep-alive
+</IfModule>
+
+# ── SECURITY HEADERS (also a Google ranking signal) ──────────────────────────
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ── GZIP COMPRESSION ─────────────────────────────────────────────────────────
+# Compresses CSS/JS/HTML by ~80% — single biggest speed improvement
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+    AddOutputFilterByType DEFLATE application/javascript application/x-javascript text/javascript
+    AddOutputFilterByType DEFLATE application/json application/xml application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml application/atom+xml
+    AddOutputFilterByType DEFLATE image/svg+xml
+    # Don't compress already-compressed formats
+    SetEnvIfNoCase Request_URI \.(gz|zip|bz2|png|jpg|jpeg|gif|webp|woff|woff2)$ no-gzip dont-vary
+</IfModule>
+
+# ── BROWSER CACHING ───────────────────────────────────────────────────────────
+# CSS/JS cached for 1 month — returning visitors load page instantly
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css                  "access plus 1 month"
+    ExpiresByType application/javascript    "access plus 1 month"
+    ExpiresByType text/javascript           "access plus 1 month"
+    ExpiresByType image/png                 "access plus 3 months"
+    ExpiresByType image/jpg                 "access plus 3 months"
+    ExpiresByType image/jpeg                "access plus 3 months"
+    ExpiresByType image/gif                 "access plus 3 months"
+    ExpiresByType image/webp                "access plus 3 months"
+    ExpiresByType image/x-icon              "access plus 1 year"
+    ExpiresByType image/ico                 "access plus 1 year"
+    ExpiresByType font/woff                 "access plus 1 year"
+    ExpiresByType font/woff2                "access plus 1 year"
+    ExpiresByType application/font-woff     "access plus 1 year"
+    ExpiresByType application/font-woff2    "access plus 1 year"
+</IfModule>
+
+# ── CACHE-CONTROL HEADERS ────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+    # Long cache for static assets (CSS, JS, images)
+    <FilesMatch "\.(css|js|png|jpg|jpeg|gif|webp|ico|woff|woff2|ttf|svg)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+    # PHP files: no cache (always fresh)
+    <FilesMatch "\.(php)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+    </FilesMatch>
+</IfModule>
+
+# ── Ngrok: skip browser warning interstitial for all responses ──
+# Without this, ngrok returns its HTML warning page instead of
+# CSS / JS / AJAX responses, breaking styles and cart functionality.
+<IfModule mod_headers.c>
+    Header always set ngrok-skip-browser-warning "true"
+</IfModule>
+
+RewriteEngine On
+
+# Dynamic sitemap — always reflects current brands/products
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+# Don't rewrite existing files/folders/symlinks
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-l
+
+# SEO-friendly blog details URL (NEW)
+RewriteRule ^blog/([^/]+)$ blog-details.php?slug=$1 [QSA,L,NC]
+
+# SEO-friendly product details URL (NEW)
+RewriteRule ^product-details/slug/([^/]+)$ product-details.php?slug=$1 [QSA,L,NC]
+
+# Alternative simpler format (NEW)
+RewriteRule ^product/([^/]+)$ product-details.php?slug=$1 [QSA,L,NC]
+
+# Brand dedicated page (volumes + circles + products)
+RewriteRule ^brand/([^/]+)/volume/([0-9]+)$ brand.php?slug=$1&volume=$2 [QSA,L]
+RewriteRule ^brand/([^/]+)$ brand.php?slug=$1 [QSA,L]
+
+# New rules for filtered products
+RewriteRule ^products/brand/([^/]+)$ products.php?brand=$1 [QSA,L]
+RewriteRule ^products/category/([^/]+)$ products.php?category=$1 [QSA,L]
+RewriteRule ^products/subcategory/([^/]+)$ products.php?subcategory=$1 [QSA,L]
+
+# Existing rules
+RewriteRule ^index$ index.php [QSA,L]
+RewriteRule ^about$ about.php [QSA,L]
+RewriteRule ^blog$ blog.php [QSA,L]
+RewriteRule ^faqs$ faqs.php [QSA,L]
+RewriteRule ^contact$ contact.php [QSA,L]
+RewriteRule ^privacy-policy$ privacy-policy.php [QSA,L]
+RewriteRule ^term-condition$ term-condition.php [QSA,L]
+RewriteRule ^cart$ cart.php [QSA,L]
+RewriteRule ^register$ register.php [QSA,L]
+RewriteRule ^login$ login.php [QSA,L]
+RewriteRule ^forgot-password$ forgot-password.php [QSA,L]
+RewriteRule ^checkout$ checkout.php [QSA,L]
+RewriteRule ^user$ user.php [QSA,L]
+RewriteRule ^account$ account.php [QSA,L]
+RewriteRule ^order-confirmation$ order-confirmation.php [QSA,L]
+RewriteRule ^returns-exchange$ returns-exchange.php [QSA,L]
+RewriteRule ^track-order$ track-order.php [QSA,L]
+RewriteRule ^my-orders$ my-orders.php [QSA,L]
+RewriteRule ^products$ products.php [QSA,L]
+RewriteRule ^recommend$ recommend.php [QSA,L]
+RewriteRule ^wishlist$ wishlist.php [QSA,L]
+RewriteRule ^loyalty$ loyalty.php [QSA,L]
+RewriteRule ^leaderboard$ leaderboard.php [QSA,L]
