@@ -24,3 +24,13 @@ error_log
 .idea/
 *.sublime-project
 *.sublime-workspace
+
+
+.env
+.env.*
+!.env.example
+.DS_Store
+node_modules/
+vendor/
+.idea/
+.vscode/

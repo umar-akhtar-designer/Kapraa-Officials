@@ -18,6 +18,6 @@ if ($isLocal) {
     $base    = 'https://' . $host;
     $db_host = 'localhost';
     $db_user = 'u167258434_kapraa';
-    $db_pass = 'Kapraa@2026';
+    $db_pass = '';
     $db_name = 'u167258434_kapraa';
 }

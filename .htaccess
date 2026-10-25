@@ -19,7 +19,7 @@
     AddOutputFilterByType DEFLATE application/rss+xml application/atom+xml
     AddOutputFilterByType DEFLATE image/svg+xml
     # Don't compress already-compressed formats
-    SetEnvIfNoCase Request_URI \.(gz|zip|bz2|png|jpg|jpeg|gif|webp|woff|woff2)$ no-gzip dont-vary
+    SetEnvIfNoCase Request_URI \.(gz|zip|bz2|png|jpg|jpeg|git pushgif|webp|woff|woff2)$ no-gzip dont-vary
 </IfModule>
 
 # ── BROWSER CACHING ───────────────────────────────────────────────────────────

@@ -11,7 +11,7 @@ function paymentDB(): mysqli {
     if ($isLocal) {
         $db = new mysqli('localhost', 'root', '', 'kapraa');
     } else {
-        $db = new mysqli('localhost', 'u167258434_kapraa', 'Kapraa@2026', 'u167258434_kapraa');
+        $db = new mysqli('localhost', 'u167258434_kapraa', '', 'u167258434_kapraa');
     }
 
     if ($db->connect_errno) {
